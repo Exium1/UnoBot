@@ -1,0 +1,28 @@
+{
+	"name": "unobot",
+	"version": "1.0.0",
+	"description": "A Discord bot for playing Uno",
+	"main": "index.js",
+	"scripts": {
+		"start": "node ."
+	},
+	"author": "Exium",
+	"license": "MIT",
+	"dependencies": {
+		"@top-gg/sdk": "^3.1.1",
+		"bufferutil": "^4.0.3",
+		"eris-sharder": "github:exium1/eris-sharder#eris-dev",
+		"erlpack": "github:abalabahaha/erlpack",
+		"mongoose": "^5.12.13",
+		"nodemon": "^2.0.7",
+		"pako": "^1.0.11",
+		"sharp": "^0.28.3",
+		"topgg-autoposter": "^2.0.0",
+		"utf-8-validate": "^5.0.5",
+		"zlib-sync": "^0.1.7"
+	},
+	"devDependencies": {
+		"eslint": "^7.28.0",
+		"prettier": "^2.3.1"
+	}
+}

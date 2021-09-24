@@ -1,0 +1,13 @@
+#IDE
+.vscode
+
+#Node modules
+node_modules
+package-lock.json
+
+#Server cards
+assets/images/serverCards/*
+!.gitkeep
+
+#Tokens and variables
+utils/config.js
