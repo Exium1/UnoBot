@@ -1,4 +1,4 @@
-<img src="https://cdn.discordapp.com/avatars/565305035592957954/77ec9d872558e6d45675ce67aa980608.png" alt="UnoBot Logo" align="left" style="width:150px; height:150px; display:block; float:right;"/>
+<img src="https://cdn.discordapp.com/avatars/565305035592957954/5c252fbb1bfa80e04c811f83e5243e51.png" alt="UnoBot Logo" align="left" style="width:150px; height:150px; display:block; float:right;"/>
 
 # UnoBot
 
