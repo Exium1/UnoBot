@@ -4,7 +4,7 @@ module.exports = {
 	// Discord bot token
 	botToken: "",
 	// Link to bot avatar URL
-	botAvatarURL: "https://cdn.discordapp.com/avatars/565305035592957954/77ec9d872558e6d45675ce67aa980608.png?size=256",
+	botAvatarURL: "https://cdn.discordapp.com/avatars/565305035592957954/5c252fbb1bfa80e04c811f83e5243e51.png?size=256",
 	// Link to bot invite URL
 	botInviteURL:
 		"https://discordapp.com/oauth2/authorize?client_id=565305035592957954&permissions=268561488&scope=bot",
