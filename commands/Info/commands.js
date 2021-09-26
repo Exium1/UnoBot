@@ -67,8 +67,6 @@ class Commands extends Command {
 			await msg.channel.createMessage(commandsEmbed);
 		}
 
-		await msg.react("success");
-
 		return;
 	}
 }

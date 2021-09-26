@@ -8,7 +8,7 @@ const userModel = require("../database/models/user");
 var commandCooldowns = {};
 
 module.exports = async (client, ipc, msg) => {
-	if (msg.channel.type == 1) return;
+	if (msg.channel.type !== 0) return;
 	if (msg.author.bot && msg.author.id !== client.user.id) return;
 	if (msg.channel.guild && !msg.channel.permissionsOf(client.user.id).has("sendMessages")) return;
 
@@ -17,10 +17,10 @@ module.exports = async (client, ipc, msg) => {
 	var prefix = await collections.prefixes.get(msg.guildID);
 	var data = {};
 
-	if (prefix === undefined) {
+	if (prefix === undefined || !prefix) {
 		guildData = await guildModel.findById(msg.guildID);
 
-		if (!guildData) {
+		if (!guildData || !guildData._id) {
 			guildData = new guildModel({
 				_id: msg.guildID,
 				name: msg.channel.guild.name,
@@ -260,7 +260,7 @@ module.exports = async (client, ipc, msg) => {
 			commandCooldowns[msg.author.id][commandName] = Date.now() + commandData.cooldown * 1000;
 		}
 
-		logger.log("info", `[${client.shards.random().id}] ${command.name.toUpperCase()} COMMAND`);
+		logger.log("info", `[${msg.guild.shard.id}] ${command.name.toUpperCase()} COMMAND`);
 
 		data.guildData = guildData ? guildData : undefined;
 		data.args = args;

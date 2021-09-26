@@ -51,9 +51,9 @@ module.exports = {
 			function createCardsFront() {
 				return new Promise(async (resolve, reject) => {
 					var cardPaths = [];
-					var maxCardImage = 20;
+					var cardsImageMax = config.cardsImageMax;
 
-					for (var i = 0; i <= maxCardImage - 1 && i < cards.length; i++) {
+					for (var i = 0; i <= cardsImageMax - 1 && i < cards.length; i++) {
 						cardPaths.push({
 							input: `./assets/images/defaultCards/${cards[i]}.png`,
 							left: 95 * i,
@@ -78,10 +78,12 @@ module.exports = {
 
 			function createCardsBack() {
 				return new Promise(async (resolve, reject) => {
+					var cardsImageMax = config.cardsImageMax;
+
 					if (
 						existsSync(
 							`./assets/images/defaultCards/backs/back${
-								cards.length < config.cardsImageMax ? cards.length : config.cardsImageMax
+								cards.length < cardsImageMax ? cards.length : cardsImageMax
 							}.png`
 						)
 					)
@@ -258,7 +260,7 @@ module.exports = {
 			if (botPermissions.has(perm) == false) permsMissing.push(perm);
 		});
 
-		if (respond) {
+		if (respond && !permsMissing.includes("sendMessages")) {
 			if (permsMissing.length > 1) {
 				channel.error(
 					await module.exports.translate("commands.missingPerms", channel.guild.language, {

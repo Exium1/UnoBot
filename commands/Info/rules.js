@@ -16,7 +16,7 @@ class Rules extends Command {
 	}
 
 	async run(client, msg, data) {
-		var voteEmbed = new Embed()
+		var rulesEmbed = new Embed()
 			.setTitle(
 				await translate("info.rules.embed.title", msg.guild.language, { clientUsername: client.user.username })
 			)
@@ -27,7 +27,7 @@ class Rules extends Command {
 			)
 			.setThumbnail("logo");
 
-		return await msg.channel.createMessage(voteEmbed);
+		return await msg.channel.createMessage(rulesEmbed);
 	}
 }
 

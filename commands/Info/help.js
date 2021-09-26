@@ -27,7 +27,7 @@ class Help extends Command {
 			command = await commands.get(args[0]);
 			if (!command) command = await commands.get(aliases.get(args[0]));
 
-			if (command.ownerOnly && msg.author.id !== ownerID) command = null;
+			if (command && command.ownerOnly && msg.author.id !== ownerID) command = null;
 		}
 
 		if (command) {
@@ -61,11 +61,11 @@ class Help extends Command {
 			});
 
 			setTimeout(async () => {
-				var helpReaction = msgReactions.get(helpMessage.id);
+				var helpReaction = await msgReactions.get(helpMessage.id);
 
 				if (helpReaction) {
-					msgReactions.delete(helpMessage.id);
 					await helpMessage.removeReactions();
+					//msgReactions.delete(helpMessage.id);
 				}
 			}, 15000);
 		}

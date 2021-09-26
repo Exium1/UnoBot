@@ -16,11 +16,11 @@ module.exports = async (client, ipc, msg, emoji, reactor) => {
 
 		if (emoji.name == "❗") {
 			await msg.delete();
+			collections.msgReactions.delete(msg.id);
 
 			command = await collections.commands.get("commands");
 
 			await command.run(client, msg, msgReaction.data);
-			collections.msgReactions.delete(msg.id);
 		}
 
 		if (emoji.name == "📕") {
@@ -29,7 +29,7 @@ module.exports = async (client, ipc, msg, emoji, reactor) => {
 
 			command = await collections.commands.get("guide");
 
-			await command.run(client, msg);
+			await command.run(client, msg, msgReaction.data);
 		}
 
 		if (emoji.name == "📜") {
@@ -38,7 +38,7 @@ module.exports = async (client, ipc, msg, emoji, reactor) => {
 
 			command = await collections.commands.get("rules");
 
-			await command.run(client, msg);
+			await command.run(client, msg, msgReaction.data);
 		}
 	}
 
