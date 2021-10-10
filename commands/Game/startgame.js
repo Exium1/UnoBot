@@ -27,7 +27,7 @@ class Startgame extends Command {
 	constructor(client) {
 		super(client, {
 			name: "startgame",
-			aliases: ["sg"],
+			aliases: ["sg", "start"],
 			botPermissions: ["sendMessages", "embedLinks", "addReactions", "manageMessages", "attachFiles"],
 			helpOptions: {
 				helpArg: true,
