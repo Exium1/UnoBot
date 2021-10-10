@@ -1,7 +1,7 @@
 const Base = require("eris-sharder").Base;
 const logger = require("./utils/logger.js");
 const { info } = require("./utils/collections");
-const { defaultLanguage, topggToken, topggAutoPostStats } = require("./utils/config");
+const { defaultLanguage } = require("./utils/config");
 const { translate } = require("./utils/functions");
 
 class Shard extends Base {
@@ -22,29 +22,14 @@ class Shard extends Base {
 
 		this.bot.editStatus("online", { name: "Uno | u!help", type: 0 });
 
-		const shardID = this.bot.shards.entries().next().value[1].id;
 		const totalShards = this.bot.options.maxShards - 1;
 
-		var clientUsername = this.bot.user.username;
-		var guildCount = this.bot.guilds.size;
-		var date = new Date(this.bot.startTime * 1000);
+		if (totalShards == this.bot.options.lastShardID) {
+			var clientUsername = this.bot.user.username;
+			var date = new Date(this.bot.startTime * 1000);
 
-		if (shardID == totalShards) {
-			logger.log(
-				"info",
-				await translate("general.readyMessage", defaultLanguage, { clientUsername, guildCount, date })
-			);
+			logger.log("info", await translate("general.readyMessage", defaultLanguage, { clientUsername, date }));
 			logger.log(" ");
-
-			const { AutoPoster } = require("topgg-autoposter");
-
-			if (topggToken && topggAutoPostStats) {
-				const poster = AutoPoster(topggToken, this);
-
-				poster.on("posted", (stats) => {
-					logger.log("info", `Posted stats to Top.gg | ${stats.serverCount} servers`);
-				});
-			}
 
 			var { updateUserRanks } = require("./utils/functions");
 

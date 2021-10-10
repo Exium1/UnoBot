@@ -480,7 +480,7 @@
 	"game.vote.info.usage.notes": [],
 	"game.vote.info.usage.tips": [],
 	"general.andA": "and a",
-	"general.readyMessage": "{{clientUsername}} is in {{guildCount}} guilds and was ready at {{date}}.",
+	"general.readyMessage": "{{clientUsername}} was ready at {{date}}.",
 	"info": "Info",
 	"info.commands.embed.footer": "Use \"{{prefix}}cmds <command name>\" to get more info on a command.",
 	"info.commands.embed.title": "{{clientUsername}} Commands",
