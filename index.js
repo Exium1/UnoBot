@@ -1,13 +1,15 @@
 const Sharder = require("eris-sharder").Master;
-const { botToken, shardCount } = require("./utils/config.js");
-const logger = require("./utils/logger");
+const { botToken, shardCount, topggToken, topggAutoPostStats } = require("./utils/config.js");
+const logger = require("./node_modules/eris-sharder/src/utils/logger.js");
 
 const sharder = new Sharder(botToken, "/bot.js", {
 	name: "UnoBot",
-	stats: false,
+	stats: true,
+	statsInterval: 1800000,
 	shards: shardCount,
 	clientOptions: {
 		messageLimit: 20,
+		defaultImageFormat: "png",
 		disableEvents: {
 			GUILD_BAN_ADD: true,
 			GUILD_BAN_REMOVE: true,
@@ -34,6 +36,20 @@ const sharder = new Sharder(botToken, "/bot.js", {
 	}
 });
 
-sharder.on("stats", (stats) => {
-	logger.log("info", stats);
+sharder.on("stats", async (stats) => {
+	var statsString = `Running ${stats.guilds} guilds, ${stats.users} users, and ${shardCount} shards.`;
+
+	logger.info("Cluster Manager", statsString);
+
+	if (topggToken && topggAutoPostStats) {
+		const Topgg = require("@top-gg/sdk");
+		const topggApi = new Topgg.Api(topggToken);
+
+		await topggApi.postStats({
+			serverCount: stats.guilds,
+			shardCount: shardCount
+		});
+
+		logger.info("Cluster Manager", `Posted stats to Top.gg.`);
+	}
 });

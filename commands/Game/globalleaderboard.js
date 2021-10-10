@@ -18,7 +18,7 @@ class GlobalLeaderboard extends Command {
 		});
 	}
 
-	async run(client, msg, { prefix, guildData }) {
+	async run(client, msg, { prefix, guildData }, ipc) {
 		var language = msg.guild.language;
 
 		guildData = guildData || (await guildModel.findById(msg.guildID));
@@ -64,6 +64,16 @@ class GlobalLeaderboard extends Command {
 				Object.assign(playerData, {
 					username: "Hidden",
 					discriminator: "0000"
+				});
+			} else if (!playerData.username || !playerData.discriminator) {
+				var fetchedPlayerData = await ipc.fetchUser(playerData._id);
+
+				playerData.username = fetchedPlayerData.username;
+				playerData.discriminator = fetchedPlayerData.discriminator;
+
+				await playerData.updateOne({
+					username: playerData.username,
+					discriminator: playerData.discriminator
 				});
 			}
 

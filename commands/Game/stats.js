@@ -25,14 +25,14 @@ class Stats extends Command {
 
 		guildData = guildData || (await getGuildData(msg.guildID));
 
-		if (!guildData.game.playerStats[player.id]) {
+		if (!guildData.game.stats[player.id]) {
 			return await msg.error(
 				await translate("game.stats.error.noStats", language, { username: player.username }),
 				{ bold: false }
 			);
 		}
 
-		var playerStats = guildData.game.playerStats[player.id];
+		var playerStats = guildData.game.stats[player.id];
 		var playerOptions = await getUserData(player.id, "options");
 
 		if (playerOptions.HideStats) {
@@ -58,7 +58,7 @@ class Stats extends Command {
 				`${await translate("game.general.rank", language)}:`,
 				await translate("game.stats.embed.rank", language, {
 					rank: playerStats.rank == undefined ? "Unknown" : playerStats.rank,
-					memberCount: Object.keys(guildData.game.playerStats).length
+					memberCount: Object.keys(guildData.game.stats).length
 				})
 			)
 			.addField(
