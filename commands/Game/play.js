@@ -132,14 +132,14 @@ class Play extends Command {
 
 		var currentCardColor = getCardColor(playedCard);
 
-		var privateEmbed = new Embed()
+		var playedCardEmbedPrivate = new Embed()
 			.setAuthor(
 				await translate("game.play.playedCard.privateEmbed", language, { playedCard }),
 				gameData.players[msg.author.id].dynamicAvatarURL
 			)
 			.setColor(currentCardColor);
 
-		var embed = new Embed()
+		var playedCardEmbed = new Embed()
 			.setAuthor(
 				await translate("game.play.playedCard.embed", language, {
 					playedCard,
@@ -149,8 +149,14 @@ class Play extends Command {
 			)
 			.setColor(currentCardColor);
 
-		if (gameSettings.UseOneChannel == true) await msg.channel.createMessage(embed);
-		else await sendEmbeds([embed, { embed: privateEmbed, recipient: currentPosition }], msg, gameData);
+		if (gameSettings.UseOneChannel == true) await msg.channel.createMessage(playedCardEmbed);
+		else {
+			await sendEmbeds(
+				[{ embed: playedCardEmbed }, { embed: playedCardEmbedPrivate, recipient: currentPosition }],
+				msg,
+				gameData
+			);
+		}
 
 		// StackCards game setting handler
 		if (gameSettings.StackCards) {
@@ -172,14 +178,14 @@ class Play extends Command {
 				if (nextCanStack == true) {
 					gameData.stackedCards = drawCount;
 
-					privateEmbed = new Embed().setAuthor(
+					var privateEmbed = new Embed().setAuthor(
 						await translate("game.play.stackCards.privateEmbed", language, {
 							stackedCards: gameData.stackedCards
 						}),
 						gameData.players[gameData.playerOrder[nextPosition]].dynamicAvatarURL
 					);
 
-					embed = new Embed().setAuthor(
+					var embed = new Embed().setAuthor(
 						await translate("game.play.stackCards.embed", language, {
 							displayName: gameData.players[gameData.playerOrder[nextPosition]].displayName,
 							stackedCards: gameData.stackedCards

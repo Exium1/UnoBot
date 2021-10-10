@@ -21,7 +21,7 @@ module.exports = async (client, ipc, msg) => {
 		guildData = await guildModel.findById(msg.guildID);
 
 		if (!guildData || !guildData._id) {
-			guildData = new guildModel({
+			guildData = await new guildModel({
 				_id: msg.guildID,
 				name: msg.channel.guild.name,
 				ownerID: msg.channel.guild.ownerID
