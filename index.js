@@ -9,6 +9,7 @@ const sharder = new Sharder(botToken, "/bot.js", {
 	shards: shardCount,
 	clientOptions: {
 		messageLimit: 20,
+		defaultImageFormat: "png",
 		disableEvents: {
 			GUILD_BAN_ADD: true,
 			GUILD_BAN_REMOVE: true,
