@@ -172,7 +172,9 @@ module.exports = {
 
 		for (var i = 0; i < languages.length; i++) {
 			var languageData = languages[i];
-			var languageString = [languageData.language, languageData.region].join(" ").toLowerCase();
+			var languageString = [languageData.code, languageData.language, languageData.region]
+				.join(" ")
+				.toLowerCase();
 
 			languageString = languageString.replace(/[^a-z ]/g, "");
 
