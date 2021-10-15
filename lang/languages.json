@@ -3,5 +3,10 @@
 		"code": "en-US",
 		"language": "English",
 		"region": "United States"
+	},
+	{
+		"code": "de-DE",
+		"language": "German",
+		"region": "Germany"
 	}
 ]
