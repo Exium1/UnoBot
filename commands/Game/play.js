@@ -37,7 +37,7 @@ class Play extends Command {
 	}
 
 	async run(client, msg, { gameData, args, prefix }) {
-		var language = language;
+		var language = msg.guild.language;
 
 		gameData = await getGameData(gameData, msg.guildID);
 
