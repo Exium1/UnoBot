@@ -8,5 +8,10 @@
 		"code": "de-DE",
 		"language": "German",
 		"region": "Germany"
+	},
+	{
+		"code": "es-ES",
+		"language": "Spanish",
+		"region": "Spain"
 	}
 ]
