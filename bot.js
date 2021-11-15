@@ -26,7 +26,7 @@ class Shard extends Base {
 
 		if (totalShards == this.bot.options.lastShardID) {
 			var clientUsername = this.bot.user.username;
-			var date = new Date(this.bot.startTime * 1000);
+			var date = new Date(this.bot.startTime);
 
 			logger.log("info", await translate("general.readyMessage", defaultLanguage, { clientUsername, date }));
 			logger.log(" ");

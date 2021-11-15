@@ -14,6 +14,9 @@ class Settings extends Command {
 				helpArg: false,
 				noArgs: false
 			},
+			defaultSettings: {
+				mode: "whitelist"
+			},
 			category: __dirname // eslint-disable-line
 		});
 	}
@@ -103,19 +106,22 @@ class Settings extends Command {
 			if (["default", "remove", "reset"].includes(newPrefix)) newPrefix = config.prefix;
 
 			if (oldPrefix == newPrefix) {
-				return await msg.error(await translate("config.prefix.error.samePrefix", language, { newPrefix }), {
-					bold: false
-				});
+				return await msg.error(
+					await translate("config.settings.prefix.error.samePrefix", language, { newPrefix }),
+					{
+						bold: false
+					}
+				);
 			}
 
 			if (newPrefix.length > 10) {
-				return await msg.error(await translate("config.prefix.error.tooLong"));
+				return await msg.error(await translate("config.settings.prefix.error.tooLong"));
 			}
 
 			await guildData.updateOne({ prefix: newPrefix });
 			prefixes.set(msg.guildID, newPrefix);
 
-			return await msg.success(await translate("config.prefix.success", language, { newPrefix }));
+			return await msg.success(await translate("config.settings.prefix.success", language, { newPrefix }));
 		} else if (["commands", "cmds", "cmd"].includes(args[0])) {
 			if (args[1] == null) {
 				var commandsHelp = new Embed()
@@ -181,14 +187,14 @@ class Settings extends Command {
 				if (args[2] == "bl") args[2] = "blacklist";
 				if (args[2] == "wl") args[2] = "whitelist";
 
-				var listItem;
+				var listItem = false;
 				var listName = args[2];
 
 				async function stringToListItem(input) {
+					// List item is like !265362871691640832, where !, &, # are members, roles, and channels respectively.
+
 					async function toRoleString(input) {
 						var role = await msg.guild.roles.find((r) => r.name.toLowerCase() == input);
-
-						console.log(role);
 
 						if (!role) role = await msg.guild.roles.get(input); // Check if string matches roleID
 
@@ -230,17 +236,15 @@ class Settings extends Command {
 					else if (input.startsWith("#")) input = `<${input}`;
 
 					if (input.startsWith("<")) {
-						if (input.startsWith("<@")) {
-							input = input.replace(/<|>|@/g, "");
-							console.log(input);
-							if (input.startsWith("&") && (await msg.guild.roles.get(input.slice(1)))) return input;
-							if (input.startsWith("!") && (await msg.guild.members.get(input.slice(1)))) return input;
-						} else if (input.startsWith("<#")) {
-							input = input.replace(/<|>/g, "");
-							if (await msg.guild.channels.get(input.slice(1))) return input;
-						}
+						input = input.replace(/<|>|@/g, "");
+
+						if (input.startsWith("&") && (await msg.guild.roles.get(input.slice(1)))) return input;
+						if (input.startsWith("!") && (await msg.guild.members.get(input.slice(1)))) return input;
+						if (input.startsWith("#") && (await msg.guild.channels.get(input.slice(1)))) return input;
+
 						return false;
 					} else {
+						// Ran if only an ID or name is given as input. Checks if it is role, member, or channel
 						var output;
 
 						output = await toRoleString(input);
@@ -275,25 +279,48 @@ class Settings extends Command {
 				} else if (args[3] == "remove") {
 					var toRemove = args.slice(4, args.length).join(" ");
 
-					listItem = await stringToListItem(toRemove);
+					// Check if input is an ID (all numbers)
+					if (toRemove.length > 15 && toRemove.replace(/[0-9]/g, "") == "") {
+						var listItemIndex;
 
-					if (!listItem) {
-						return await msg.error(
-							await translate("config.settings.cmds.list.error.noListItem", language, {
-								listItem: toRemove
-							}),
-							{ bold: false }
-						);
-					} else if (!commandData[listName].includes(listItem)) {
-						console.log(listItem);
-						return await msg.error(
-							await translate(`config.settings.cmds.${listName}.error.alreadyRemoved`, language, {
-								listItem: toRemove
-							}),
-							{ bold: false }
-						);
+						for (i = 0; i < commandData[listName].length; i++) {
+							if (commandData[listName][i].slice(1) == toRemove) {
+								listItem = true;
+								listItemIndex = i;
+							}
+						}
+
+						if (listItem) {
+							commandData[listName].splice(listItemIndex, 1);
+						} else {
+							return await msg.error(
+								await translate("config.settings.cmds.list.error.noListItem", language, {
+									listItem: toRemove
+								}),
+								{ bold: false }
+							);
+						}
 					} else {
-						commandData[listName].splice(commandData[listName].indexOf(listItem), 1);
+						listItem = await stringToListItem(toRemove);
+
+						if (!listItem) {
+							return await msg.error(
+								await translate("config.settings.cmds.list.error.noListItem", language, {
+									listItem: toRemove
+								}),
+								{ bold: false }
+							);
+						} else if (!commandData[listName].includes(listItem)) {
+							console.log(listItem);
+							return await msg.error(
+								await translate(`config.settings.cmds.${listName}.error.alreadyRemoved`, language, {
+									listItem: toRemove
+								}),
+								{ bold: false }
+							);
+						} else {
+							commandData[listName].splice(commandData[listName].indexOf(listItem), 1);
+						}
 					}
 				} else if (["on", "enabled", "true"].includes(args[3])) {
 					if (commandData.mode == listName)
@@ -332,7 +359,12 @@ class Settings extends Command {
 									commandData[listName].splice(commandData[listName].indexOf(listItem), 1);
 								}
 							} else if (newListItem.startsWith("!")) {
-								if (await msg.guild.member.get(newListItem.slice(1))) {
+								var fetchedMember = await msg.guild.fetchMembers({
+									userIDs: newListItem.slice(1),
+									limit: 1
+								});
+
+								if (fetchedMember) {
 									userList.push(`• <@${newListItem}>`);
 								} else {
 									commandData[listName].splice(commandData[listName].indexOf(listItem), 1);
@@ -345,6 +377,10 @@ class Settings extends Command {
 								}
 							} else roleList.push(listItem);
 						}
+
+						await guildData.updateOne({
+							[`settings.commands.${commandName}.${listName}`]: commandData[listName]
+						});
 					} else emptyList = true;
 
 					var listEmbed = new Embed()
@@ -479,8 +515,8 @@ class Settings extends Command {
 				var blacklistString = "";
 
 				if (commandData.blacklist.length > 0) {
-					for (i = 0; i < commandData.whitelist.length; i++) {
-						listItem = commandData.whitelist[i];
+					for (i = 0; i < commandData.blacklist.length; i++) {
+						listItem = commandData.blacklist[i];
 
 						if (listItem.startsWith("&") || listItem.startsWith("!")) {
 							blacklistString = blacklistString + `• <@${listItem}>\n`;
@@ -789,7 +825,7 @@ class Settings extends Command {
 					var clientUsername = client.user.username;
 					var contributeEmbed = new Embed()
 						.setTitle(await translate("config.settings.lang.contribute.embed.title", language, { prefix }))
-						.setThumbnail("default")
+						.setThumbnail("logo")
 						.setDescription(
 							await translate("config.settings.lang.contribute.embed.desc", language, { clientUsername })
 						)
