@@ -26,8 +26,7 @@ class Commands extends Command {
 		if (args[0]) {
 			command = await commands.get(args[0]);
 			if (!command) command = await commands.get(aliases.get(args[0]));
-
-			if (command.ownerOnly && msg.author.id !== ownerID) command = null;
+			if (command && command.ownerOnly && msg.author.id !== ownerID) command = null;
 		}
 
 		if (command) {
