@@ -23,13 +23,13 @@ class Kick extends Command {
 		});
 	}
 
-	async run(client, msg, { prefix, gameData, args, commandData }) {
+	async run(client, msg, { prefix, gameData, args }) {
 		var language = msg.guild.language;
 
 		gameData = await getGameData(gameData, msg.guildID);
 
 		if (gameData) {
-			if (!(await hasGamePermissions(msg, gameData, commandData))) return;
+			if (!(await hasGamePermissions(msg, gameData))) return;
 		} else {
 			return msg.error(await translate("game.general.error.noOngoingGame", language, { prefix }));
 		}

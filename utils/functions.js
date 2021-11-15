@@ -281,23 +281,19 @@ module.exports = {
 		return permsMissing.length == 0 ? true : permsMissing;
 	},
 
-	hasGamePermissions: async function (msg, gameData, commandData) {
+	hasGamePermissions: async function (msg, gameData) {
 		return new Promise(async (resolve, reject) => {
-			// Check the user for perms if the command is not in whitelist mode
-			if (commandData.mode !== "whitelist") {
-				var hasPerm = await msg.channel.permissionsOf(msg.author.id).has("administrator");
+			// Check the user for perms
+			var hasPerm = await msg.channel.permissionsOf(msg.author.id).has("administrator");
 
-				if (!hasPerm) hasPerm = gameData.gameCreatorID == msg.author.id;
+			if (!hasPerm) hasPerm = gameData.gameCreatorID == msg.author.id;
 
-				if (!hasPerm) {
-					await msg.error(
-						await module.exports.translate("game.general.error.noGamePerm", msg.guild.language)
-					);
-					resolve(false);
-				} else resolve(true);
+			if (!hasPerm) {
+				await msg.error(await module.exports.translate("game.general.error.noGamePerm", msg.guild.language));
+				resolve(false);
+			} else resolve(true);
 
-				return;
-			}
+			return;
 		});
 	},
 

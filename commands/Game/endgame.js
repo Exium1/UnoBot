@@ -17,13 +17,13 @@ class Endgame extends Command {
 		});
 	}
 
-	async run(client, msg, { prefix, commandData, gameData }) {
+	async run(client, msg, { prefix, gameData }) {
 		var language = msg.guild.language;
 
 		gameData = await getGameData(gameData, msg.guildID);
 
 		if (gameData) {
-			if (!(await hasGamePermissions(msg, gameData, commandData))) return;
+			if (!(await hasGamePermissions(msg, gameData))) return;
 
 			if (gameData.status == "preGame") {
 				var { startgameEvent } = require("../../utils/eventEmitters.js");
