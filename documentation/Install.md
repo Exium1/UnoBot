@@ -165,7 +165,7 @@ npm start
 Or if we want to run the bot in the background (a log file will be created named `nohup.out`)
 
 ```bash
-nohup npm start &
+nohup npm start &!
 ```
 
 ### **Stopping the bot**
@@ -178,7 +178,8 @@ If you used the nohup command to run the bot use the following command to find t
 ps -x | grep node
 ```
 
-Find the line where it which looks like
+Find the line where it which looks like 
+*Important: if you have other node processes running on your machine, make sure you kill the right process*
 
 ```bash
 <id> pts/0    Sl     0:00 node .
@@ -189,3 +190,4 @@ And use the id (the first number) in the following command:
 ```bash
 sudo kill <id>
 ```
+
