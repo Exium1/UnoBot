@@ -179,6 +179,7 @@ ps -x | grep node
 ```
 
 Find the line where it which looks like 
+
 *Important: if you have other node processes running on your machine, make sure you kill the right process*
 
 ```bash
