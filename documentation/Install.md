@@ -56,8 +56,6 @@ Once done, verify the installation by running:
 nodejs --version
 ```
 
-Which should output `v10.19.0`
-
 ### **MongoDB** - [Tutorial for other distros](https://docs.mongodb.com/manual/installation/)
 
 UnoBot uses a MongoDB database to store certain stats. In this section we will install MongoDB Community Edition locally. If you are familiar with, and want to use MongoDB Atlas you can skip this section (no tutorial for MongoDB Atlas will be provided here).
@@ -93,7 +91,7 @@ UnoBot uses a MongoDB database to store certain stats. In this section we will i
     sudo systemctl start mongodb
     ```
 
-    If you receive an error similar to `Failed to start mongod.service: Unit mongod.service not found.` run the follwing command first:
+    If you receive an error similar to `Failed to start mongod.service: Unit mongod.service not found.` run the following command first:
 
     ```bash
     sudo systemctl deamon-Reload
