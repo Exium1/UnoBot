@@ -122,11 +122,11 @@ In this section we will install and configure the bot on our machine.
     git clone https://github.com/Exium1/UnoBot.git UnoBot
     ```
 
-3. Go to the utils folder and open `configExample.js`
+3. Go to the utils folder and open `configExample.js` in your favorite editor
 
     ```bash
     cd UnoBot/utils
-    nano configExample.js
+    vi configExample.js
     ```
 
     Fill in the following values:
