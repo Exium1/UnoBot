@@ -56,7 +56,7 @@ Once done, verify the installation by running:
 nodejs --version
 ```
 
-### **MongoDB** - [Tutorial for other distros](https://docs.mongodb.com/manual/installation/) / [Mac OS X](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
+### **MongoDB** - [Tutorial for other distros](https://docs.mongodb.com/manual/installation/) / [Mac OS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
 
 UnoBot uses a MongoDB database to store certain stats. In this section we will install MongoDB Community Edition locally. If you are familiar with, and want to use MongoDB Atlas you can skip this section (no tutorial for MongoDB Atlas will be provided here).
 
