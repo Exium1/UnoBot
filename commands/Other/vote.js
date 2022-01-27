@@ -29,7 +29,7 @@ class Vote extends Command {
 			)
 			.setThumbnail("logo");
 
-		return await msg.channel.createMessage(voteEmbed);
+		return await msg.channel.createMessage({ embeds: [voteEmbed] });
 	}
 }
 

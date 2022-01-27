@@ -40,7 +40,7 @@ class Cards extends Command {
 			var recipientDMChannel = await msg.author.getDMChannel();
 
 			if (recipientDMChannel) {
-				await recipientDMChannel.createMessage(cardsEmbed);
+				await recipientDMChannel.createMessage({ embeds: [cardsEmbed] });
 			} else {
 				throw await translate("game.general.error.DMChannel", language, {
 					displayName: msg.member.nick || msg.author.username
@@ -48,15 +48,15 @@ class Cards extends Command {
 			}
 		} else {
 			if (msg.channel.id == gameData.players[msg.author.id].channelID) {
-				await msg.channel.createMessage(cardsEmbed);
+				await msg.channel.createMessage({ embeds: [cardsEmbed] });
 			} else {
 				var unoChannel = await msg.guild.channels.get(gameData.players[msg.author.id].channelID);
 
 				if (unoChannel) {
-					await unoChannel.createMessage(cardsEmbed);
+					await unoChannel.createMessage({ embeds: [cardsEmbed] });
 				} else {
 					throw await translate("game.general.error.channelNotFound", language, {
-						displayName: msg.member.nick || msg.atuhor.username
+						displayName: msg.member.nick || msg.author.username
 					});
 				}
 			}

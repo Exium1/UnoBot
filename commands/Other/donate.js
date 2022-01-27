@@ -29,7 +29,7 @@ class Donate extends Command {
 				"https://cdn.discordapp.com/avatars/565305035592957954/77ec9d872558e6d45675ce67aa980608.png?size=512"
 			);
 
-		return await msg.channel.createMessage(donateEmbed);
+		return await msg.channel.createMessage({ embeds: [donateEmbed] });
 	}
 }
 

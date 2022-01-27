@@ -27,7 +27,7 @@ class Rules extends Command {
 			)
 			.setThumbnail("logo");
 
-		return await msg.channel.createMessage(rulesEmbed);
+		return await msg.channel.createMessage({ embeds: [rulesEmbed] });
 	}
 }
 

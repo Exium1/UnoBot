@@ -1,7 +1,6 @@
 const path = require("path");
 const Embed = require("./embed");
 const { translate } = require("../utils/functions");
-const { botAvatarURL } = require("../utils/config");
 
 class Command {
 	constructor(

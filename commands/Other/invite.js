@@ -31,7 +31,7 @@ class Invite extends Command {
 			)
 			.setThumbnail("logo");
 
-		return await msg.channel.createMessage(inviteEmbed);
+		return await msg.channel.createMessage({ embeds: [inviteEmbed] });
 	}
 }
 

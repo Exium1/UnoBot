@@ -31,7 +31,7 @@ class Help extends Command {
 		}
 
 		if (command) {
-			return msg.channel.createMessage(await command.helpEmbed(prefix, language));
+			return msg.channel.createMessage({ embeds: [await command.helpEmbed(prefix, language)] });
 		} else {
 			var helpEmbed = new Embed()
 				.setTitle(
@@ -48,7 +48,7 @@ class Help extends Command {
 				)
 				.setFooter(await translate("info.help.embed.footer", language));
 
-			var helpMessage = await msg.channel.createMessage(helpEmbed);
+			var helpMessage = await msg.channel.createMessage({ embeds: [helpEmbed] });
 
 			await helpMessage.addReaction("❗");
 			await helpMessage.addReaction("📕");

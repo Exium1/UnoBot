@@ -166,7 +166,7 @@ class GameSettings extends Command {
 						})}`
 					);
 
-				return msg.channel.createMessage(gameSettingEmbed);
+				return msg.channel.createMessage({ embeds: [gameSettingEmbed] });
 			}
 
 			if (gameData.customGameSettings[settingName] == undefined) {
@@ -219,7 +219,7 @@ class GameSettings extends Command {
 				gameSettingsEmbed.addField(`${settingName}`, gameSettingValue, true);
 			}
 
-			return msg.channel.createMessage(gameSettingsEmbed);
+			return msg.channel.createMessage({ embeds: [gameSettingsEmbed] });
 		} else {
 			return await msg.error(
 				await translate("game.general.settings.error.notValid", language, { gameSetting: args[0], prefix })

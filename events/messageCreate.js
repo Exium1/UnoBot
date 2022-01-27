@@ -115,7 +115,7 @@ module.exports = async (client, ipc, msg) => {
 			var textPerms = await hasBotPermissions(["sendMessages", "embedLinks"], msg.channel, true);
 
 			if (textPerms.length > 0) return;
-			else return msg.channel.createMessage(await command.helpEmbed(prefix, msg.guild.language));
+			else return msg.channel.createMessage({ embeds: [await command.helpEmbed(prefix, msg.guild.language)] });
 		}
 
 		// Check if bot has necessary permissions for the command

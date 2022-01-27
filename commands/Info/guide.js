@@ -26,42 +26,42 @@ class Guide extends Command {
 				.setThumbnail("logo")
 				.setDescription(await translate("info.guide.start.desc", language, { prefix }));
 
-			await msg.channel.createMessage(startEmbed);
+			await msg.channel.createMessage({ embeds: [startEmbed] });
 		} else if (args[0] == "play") {
 			var playEmbed = new Embed()
 				.setTitle(await translate("info.guide.play.title", language, { prefix }))
 				.setThumbnail("logo")
 				.setDescription(await translate("info.guide.play.desc", language, { prefix }));
 
-			await msg.channel.createMessage(playEmbed);
+			await msg.channel.createMessage({ embeds: [playEmbed] });
 		} else if (args[0] == "commands") {
 			var commandsEmbed = new Embed()
 				.setTitle(await translate("info.guide.commands.title", language, { prefix }))
 				.setThumbnail("logo")
 				.setDescription(await translate("info.guide.commands.desc", language, { prefix }));
 
-			await msg.channel.createMessage(commandsEmbed);
+			await msg.channel.createMessage({ embeds: [commandsEmbed] });
 		} else if (args[0] == "settings") {
 			var settingsEmbed = new Embed()
 				.setTitle(await translate("info.guide.settings.title", language, { prefix, clientUsername }))
 				.setThumbnail("logo")
 				.setDescription(await translate("info.guide.settings.desc", language, { prefix, clientUsername }));
 
-			await msg.channel.createMessage(settingsEmbed);
+			await msg.channel.createMessage({ embeds: [settingsEmbed] });
 		} else if (args[0] == "options") {
 			var optionsEmbed = new Embed()
 				.setTitle(await translate("info.guide.options.title", language, { prefix, clientUsername }))
 				.setThumbnail("logo")
 				.setDescription(await translate("info.guide.options.desc", language, { prefix }));
 
-			await msg.channel.createMessage(optionsEmbed);
+			await msg.channel.createMessage({ embeds: [optionsEmbed] });
 		} else {
 			var guideEmbed = new Embed()
 				.setTitle(await translate("info.guide.embed.title", language, { clientUsername }))
 				.setThumbnail("logo")
 				.setDescription(await translate("info.guide.embed.desc", language, { prefix }));
 
-			await msg.channel.createMessage(guideEmbed);
+			await msg.channel.createMessage({ embeds: [guideEmbed] });
 		}
 
 		return;

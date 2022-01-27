@@ -91,13 +91,13 @@ class GlobalStats extends Command {
 			var recipientDMChannel = await player.getDMChannel();
 
 			if (recipientDMChannel) {
-				await recipientDMChannel.createMessage(gLeaderboardEmbed);
+				await recipientDMChannel.createMessage({ embeds: [gLeaderboardEmbed] });
 			} else {
 				throw await translate("game.general.error.DMChannel", language, {
 					displayName: msg.member.nick || msg.author.username
 				});
 			}
-		} else await msg.channel.createMessage(gLeaderboardEmbed);
+		} else await msg.channel.createMessage({ embeds: [gLeaderboardEmbed] });
 
 		return msg.react("success");
 	}
