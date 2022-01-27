@@ -30,7 +30,7 @@ class Commands extends Command {
 		}
 
 		if (command) {
-			return msg.channel.createMessage(await command.helpEmbed(prefix, language));
+			return msg.channel.createMessage({ embeds: [await command.helpEmbed(prefix, language)] });
 		} else {
 			var commandCategories = ["Game", "Config", "Info", "Other"];
 			var commandsEmbed = new Embed()
@@ -63,7 +63,7 @@ class Commands extends Command {
 				}
 			}
 
-			await msg.channel.createMessage(commandsEmbed);
+			await msg.channel.createMessage({ embeds: [commandsEmbed] });
 		}
 
 		return;

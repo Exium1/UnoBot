@@ -29,7 +29,7 @@ class Shards extends Command {
 			}\` | \`${s.latency}ms\`\n`;
 		});
 
-		return await msg.channel.createMessage(shardsEmbed);
+		return await msg.channel.createMessage({ embeds: [shardsEmbed] });
 	}
 }
 

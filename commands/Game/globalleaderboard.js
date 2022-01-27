@@ -87,7 +87,7 @@ class GlobalLeaderboard extends Command {
 			);
 		}
 
-		await msg.channel.createMessage(gLeaderboardEmbed);
+		await msg.channel.createMessage({ embeds: [gLeaderboardEmbed] });
 
 		return msg.react("success");
 	}

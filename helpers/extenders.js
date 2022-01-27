@@ -70,7 +70,7 @@ TextChannel.prototype.embedReply = function (text, options = {}) {
 		.setDescription(`${options.bold ? "**" : ""}${options.emoji} ${text}${options.bold ? "**" : ""}`)
 		.setColor(options.color);
 
-	return this.createMessage(replyEmbed);
+	return this.createMessage({ embeds: [replyEmbed] });
 };
 
 Object.defineProperty(Eris.Message.prototype, "guild", {

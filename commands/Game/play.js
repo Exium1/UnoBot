@@ -149,7 +149,7 @@ class Play extends Command {
 			)
 			.setColor(currentCardColor);
 
-		if (gameSettings.UseOneChannel == true) await msg.channel.createMessage(playedCardEmbed);
+		if (gameSettings.UseOneChannel == true) await msg.channel.createMessage({ embeds: [playedCardEmbed] });
 		else {
 			await sendEmbeds(
 				[{ embed: playedCardEmbed }, { embed: playedCardEmbedPrivate, recipient: currentPosition }],
@@ -551,7 +551,7 @@ class Play extends Command {
 				)
 				.addField(`${await translate("game.play.end.log.endDate", language)}:`, new Date().toUTCString(), true);
 
-			if (startGameChannel) await startGameChannel.createMessage(logEmbed);
+			if (startGameChannel) await startGameChannel.createMessage({ embeds: [logEmbed] });
 
 			//  Run this after 30 seconds
 			setTimeout(async () => {

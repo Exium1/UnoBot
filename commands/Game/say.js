@@ -76,7 +76,7 @@ class Say extends Command {
 			var playerChannel = await msg.guild.channels.get(gameData.players[player.id].channelID);
 
 			if (playerChannel) {
-				await playerChannel.createMessage(sayEmbed);
+				await playerChannel.createMessage({ embeds: [sayEmbed] });
 			} else {
 				throw await translate("game.general.error.channelNotFound", language, {
 					displayName: gameData.players[player.id].displayName

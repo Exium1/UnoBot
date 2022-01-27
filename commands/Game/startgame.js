@@ -128,9 +128,12 @@ class Startgame extends Command {
 			Object.assign(gameSettings, guildData.game.defaultGameSettings);
 		}
 
+		// Require manageChannels and viewChannel permissions if UseOneChannel is disabled
 		if (!gameSettings.UseOneChannel) {
 			if ((await hasBotPermissions(["manageChannels", "viewChannel"], msg.channel, true)) !== true) return;
 		}
+
+		// Require manageRoles permission if SpectateGame is enabled
 		if (gameSettings.SpectateGame) {
 			if ((await hasBotPermissions(["manageRoles"], msg.channel, false)) !== true) {
 				return msg.error(await translate("game.startgame.error.noManageRoles", language));
@@ -229,7 +232,7 @@ class Startgame extends Command {
 						)
 						.setFooter(await translate("game.startgame.main.embed.footer", language));
 
-					var startgameMessage = await msg.channel.createMessage(startgameEmbed);
+					var startgameMessage = await msg.channel.createMessage({ embeds: [startgameEmbed] });
 
 					gameData = await new gameModel({
 						guildID: msg.guildID,
@@ -270,7 +273,7 @@ class Startgame extends Command {
 						if (timer == 0) {
 							clearInterval(startgameInterval);
 						} else {
-							startgameEmbed.embed.fields[1] = {
+							startgameEmbed.fields[1] = {
 								name: `${await translate("game.general.gameSettings", language)}:`,
 								value: await objectToString(customGameSettings, false, language),
 								inline: false
@@ -280,7 +283,7 @@ class Startgame extends Command {
 								await translate("game.startgame.main.embed.desc", language, { timeLeft: timer })
 							);
 
-							startgameMessage.edit(startgameEmbed);
+							await startgameMessage.edit({ embeds: [startgameEmbed] });
 						}
 					}, 10000);
 
@@ -300,13 +303,13 @@ class Startgame extends Command {
 							playerListDisplayNames = [];
 							playerList.forEach((p) => playerListDisplayNames.push(p.displayName));
 
-							startgameEmbed.embed.fields[0] = {
+							startgameEmbed.fields[0] = {
 								name: `${await translate("game.general.players", language)}:`,
 								value: await arrayToString(playerListDisplayNames, "🔹", language),
 								inline: false
 							};
 
-							startgameMessage.edit(startgameEmbed);
+							await startgameMessage.edit({ embeds: [startgameEmbed] });
 						}
 
 						return;
@@ -325,13 +328,13 @@ class Startgame extends Command {
 							playerListDisplayNames = [];
 							playerList.forEach((p) => playerListDisplayNames.push(p.displayName));
 
-							startgameEmbed.embed.fields[0] = {
+							startgameEmbed.fields[0] = {
 								name: `${await translate("game.general.players", language)}:`,
 								value: await arrayToString(playerListDisplayNames, "🔹", language),
 								inline: false
 							};
 
-							startgameMessage.edit(startgameEmbed);
+							await startgameMessage.edit({ embeds: [startgameEmbed] });
 						}
 
 						return;
@@ -389,13 +392,13 @@ class Startgame extends Command {
 							startgameEmbed.setDescription(
 								`:x: ${await translate("game.startgame.main.canceledGameDesc", language)}`
 							);
-							startgameEmbed.embed.fields[1] = {
+							startgameEmbed.fields[1] = {
 								name: `${await translate("game.general.gameSettings", language)}:`,
 								value: await objectToString(customGameSettings, false, language),
 								inline: false
 							};
 
-							await startgameMessage.edit(startgameEmbed);
+							await startgameMessage.edit({ embeds: [startgameEmbed] });
 
 							return reject();
 						} else if (reason == "forceStart") {
@@ -405,7 +408,7 @@ class Startgame extends Command {
 								})
 							);
 
-							startgameEmbed.embed.fields[1] = {
+							startgameEmbed.fields[1] = {
 								name: `${await translate("game.general.gameSettings", language)}:`,
 								value: await objectToString(customGameSettings, false, language),
 								inline: false
@@ -420,7 +423,7 @@ class Startgame extends Command {
 								})}`
 							);
 
-							await startgameMessage.edit(startgameEmbed);
+							await startgameMessage.edit({ embeds: [startgameEmbed] });
 
 							return reject();
 						}
@@ -447,8 +450,8 @@ class Startgame extends Command {
 						if (gameSettings.UseOneChannel) {
 							startgameEmbed.setDescription(
 								`${
-									startgameEmbed.embed.description.startsWith(":warning:")
-										? `${startgameEmbed.embed.description}\n`
+									startgameEmbed.description.startsWith(":warning:")
+										? `${startgameEmbed.description}\n`
 										: ""
 								}:white_check_mark: ${await translate(
 									"game.startgame.gameStarted.singleChannel",
@@ -458,8 +461,8 @@ class Startgame extends Command {
 						} else {
 							startgameEmbed.setDescription(
 								`${
-									startgameEmbed.embed.description.startsWith(":warning:")
-										? `${startgameEmbed.embed.description}\n`
+									startgameEmbed.description.startsWith(":warning:")
+										? `${startgameEmbed.description}\n`
 										: ""
 								}:white_check_mark: ${await translate(
 									"game.startgame.gameStarted.multiChannel",
@@ -470,7 +473,7 @@ class Startgame extends Command {
 
 						startgameEmbed.setTitle(await translate("game.startgame.gameStarted", language));
 
-						await startgameMessage.edit(startgameEmbed);
+						await startgameMessage.edit({ embeds: [startgameEmbed] });
 
 						return resolve();
 					}
