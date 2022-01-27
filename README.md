@@ -54,10 +54,10 @@ The first thing you need to do is make a new application, kind of a custom accou
     - It should be added, but offline, as it is not running yet.
 
 ## Windows
----
+
 Follow this if you're self-hosting the bot on Windows, as the installation is different on other operating systems.
 
-### **Node.js**
+### Node.js
 
 Node.js is a program needed to run the JavaScript on your machine.
 
@@ -69,7 +69,7 @@ Node.js is a program needed to run the JavaScript on your machine.
     - After downloading, open the download and follow the download instructions.
     - The installation is relatively easy, but a reboot may be required.
 
-### **MongoDB**
+### MongoDB
 
 MongoDB is the database the bot will be using to store information like ongoing games and user options. For this installation, the Community version will be used as it will be a local database and not accessible online.
 
@@ -98,7 +98,7 @@ MongoDB is the database the bot will be using to store information like ongoing 
     - For the bot to work properly, the database needs to be running. However, this does not mean the MongoDB Compass window needs to be open.
     - The database should automatically run in the background.
 
-### **Download and configure the code**
+### Download and configure the code
 
 Now we will download the code off GitHub and set it up with your custom info.
 
@@ -137,7 +137,7 @@ Now we will download the code off GitHub and set it up with your custom info.
     - This will download the dependencies required for the bot to run.
     - After it has finished installing, you are free to close the command prompt.
 
-### **Run your bot**
+### Run your bot
 
 Now with everything installed and customized, you should be able to launch your bot.
 
@@ -157,11 +157,11 @@ Now with everything installed and customized, you should be able to launch your 
 
 ## Linux
 
----
+
 The following guide is based upon an Ubuntu 20.04 distro. For other distributions, a link to a similar tutorial will be provided when possible.
 The following commands should be issued from a terminal unless specified otherwise.
 
-### **Node.js and npm** - [Tutorial for other distros](https://linuxconfig.org/install-npm-on-linux)
+### Node.js and npm - [Tutorial for other distros](https://linuxconfig.org/install-npm-on-linux)
 
 UnoBot is written in JavaScript so we will need to install Node.js to run this bot and npm to install the needed dependencies.
 
@@ -178,7 +178,7 @@ Once done, verify the installation by running:
 nodejs --version
 ```
 
-### **MongoDB** - [Tutorial for other distros](https://docs.mongodb.com/manual/installation/) / [Mac OS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
+### MongoDB - [Tutorial for other distros](https://docs.mongodb.com/manual/installation/) / [Mac OS](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
 
 UnoBot uses a MongoDB database to store certain stats. In this section we will install MongoDB Community Edition locally. If you are familiar with, and want to use MongoDB Atlas you can skip this section (no tutorial for MongoDB Atlas will be provided here).
 
@@ -228,7 +228,7 @@ UnoBot uses a MongoDB database to store certain stats. In this section we will i
 
 
 
-### **Configure the bot**
+### Configure the bot
 
 In this section we will install and configure the bot on our machine.
 
@@ -269,7 +269,7 @@ In this section we will install and configure the bot on our machine.
     mv configExample.js config.js 
     ```
 
-### **Running the bot**
+### Running the bot
 
 When all the configuration is done we only need to move to the main directory and install the dependencies:
 
@@ -290,7 +290,7 @@ Or if we want to run the bot in the background (a log file will be created named
 nohup npm start &!
 ```
 
-### **Stopping the bot**
+### Stopping the bot
 
 To stop the bot simple press `CTRL+C` in the terminal where it's running.
 
