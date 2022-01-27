@@ -143,7 +143,7 @@ class Options extends Command {
 						})}`
 					);
 
-				return msg.channel.createMessage(optionEmbed);
+				return msg.channel.createMessage({ embeds: [optionEmbed] });
 			}
 
 			userData.markModified("options");
@@ -177,7 +177,7 @@ class Options extends Command {
 				gameSettingsEmbed.addField(`${optionName}`, optionValue, true);
 			}
 
-			return msg.channel.createMessage(gameSettingsEmbed);
+			return msg.channel.createMessage({ embeds: [gameSettingsEmbed] });
 		} else {
 			return await msg.error(
 				await translate("config.options.error.notValid", language, { optionName: args[0], prefix })

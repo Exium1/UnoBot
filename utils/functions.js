@@ -565,7 +565,7 @@ module.exports = {
 						var recipientUser = (await guild.members.get(playerID)).user;
 						var recipientDMChannel = await recipientUser.getDMChannel();
 
-						await recipientDMChannel.createMessage(embed, files);
+						await recipientDMChannel.createMessage({ embeds: [embed] }, files);
 
 						resolve(recipientDMChannel.id);
 					} else {
@@ -576,7 +576,7 @@ module.exports = {
 
 							if (!recipientChannel) return reject(`No channel found with ID ${channelID}.`);
 
-							await recipientChannel.createMessage(embed, files);
+							await recipientChannel.createMessage({ embeds: [embed] }, files);
 							if (address.autoPing && userOptions.AutoPing) {
 								await recipientChannel.createMessage(
 									await module.exports.translate("game.general.autoPing.notif", msg.guild.language, {

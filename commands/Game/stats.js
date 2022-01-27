@@ -90,13 +90,13 @@ class Stats extends Command {
 			var recipientDMChannel = await player.getDMChannel();
 
 			if (recipientDMChannel) {
-				await recipientDMChannel.createMessage(leaderboardEmbed);
+				await recipientDMChannel.createMessage({ embeds: [leaderboardEmbed] });
 			} else {
 				throw await translate("game.general.error.DMChannel", language, {
 					displayName: player.username
 				});
 			}
-		} else await msg.channel.createMessage(leaderboardEmbed);
+		} else await msg.channel.createMessage({ embeds: [leaderboardEmbed] });
 
 		return msg.react("success");
 	}

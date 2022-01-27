@@ -77,7 +77,7 @@ class Leaderboard extends Command {
 			);
 		}
 
-		await msg.channel.createMessage(leaderboardEmbed);
+		await msg.channel.createMessage({ embeds: [leaderboardEmbed] });
 
 		return msg.react("success");
 	}

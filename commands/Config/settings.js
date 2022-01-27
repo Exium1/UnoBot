@@ -35,7 +35,7 @@ class Settings extends Command {
 		}
 
 		if (args[0] == "help" || args[0] == null) {
-			var settingsHelp = new Embed()
+			var settingsHelpEmbed = new Embed()
 				.setTitle(
 					await translate("config.settings.embed.title", language, { clientUsername: client.user.username })
 				)
@@ -77,7 +77,7 @@ class Settings extends Command {
 					true
 				);
 
-			msg.channel.createMessage(settingsHelp);
+			msg.channel.createMessage({ embeds: [settingsHelpEmbed] });
 		} else if (args[0] == "prefix") {
 			if (args[1] == null || args[1] == "help") {
 				var prefixHelpEmbed = new Embed()
@@ -97,7 +97,7 @@ class Settings extends Command {
 						await translate("config.settings.prefix.embed.example.text", language, { prefix })
 					);
 
-				return msg.channel.createMessage(prefixHelpEmbed);
+				return msg.channel.createMessage({ embeds: [prefixHelpEmbed] });
 			}
 
 			var oldPrefix = guildData.prefix;
@@ -124,7 +124,7 @@ class Settings extends Command {
 			return await msg.success(await translate("config.settings.prefix.success", language, { newPrefix }));
 		} else if (["commands", "cmds", "cmd"].includes(args[0])) {
 			if (args[1] == null) {
-				var commandsHelp = new Embed()
+				var commandsHelpEmbed = new Embed()
 					.setTitle(
 						await translate("config.settings.cmds.helpEmbed.title", language, { prefix, commandName: "" })
 					)
@@ -146,7 +146,7 @@ class Settings extends Command {
 					)
 					.setFooter(await translate("config.settings.cmds.helpEmbed.footer", language));
 
-				return msg.channel.createMessage(commandsHelp);
+				return msg.channel.createMessage({ embeds: [commandsHelpEmbed] });
 			}
 
 			if (args[1].startsWith(prefix)) args[1] = args[1].slice(prefix.length); // Remove prefix from command name
@@ -423,7 +423,7 @@ class Settings extends Command {
 							)}**`;
 					}
 
-					return await msg.channel.createMessage(listEmbed);
+					return await msg.channel.createMessage({ embeds: [listEmbed] });
 				} else {
 					return msg.error(
 						await translate("config.settings.cmds.list.error", language, {
@@ -531,11 +531,11 @@ class Settings extends Command {
 					blacklistString
 				);
 
-				return msg.channel.createMessage(commandEmbed);
+				return msg.channel.createMessage({ embeds: [commandEmbed] });
 			} else {
 				var commandName2 = commandName.charAt(0).toUpperCase() + commandName.slice(1);
 
-				commandsHelp = new Embed()
+				commandsHelpEmbed = new Embed()
 					.setTitle(
 						await translate("config.settings.cmds.cmdHelpEmbed.title", language, {
 							prefix,
@@ -578,7 +578,7 @@ class Settings extends Command {
 						})
 					);
 
-				return msg.channel.createMessage(commandsHelp);
+				return msg.channel.createMessage({ embeds: [commandsHelpEmbed] });
 			}
 
 			await guildData.updateOne({
@@ -730,7 +730,7 @@ class Settings extends Command {
 							})}`
 						);
 
-					return msg.channel.createMessage(gameSettingEmbed);
+					return msg.channel.createMessage({ embeds: [gameSettingEmbed] });
 				}
 
 				await guildData.updateOne({
@@ -769,7 +769,7 @@ class Settings extends Command {
 					gameSettingsEmbed.addField(`${settingName}`, gameSettingValue, true);
 				}
 
-				return msg.channel.createMessage(gameSettingsEmbed);
+				return msg.channel.createMessage({ embeds: [gameSettingsEmbed] });
 			} else if (args[1] == null || args[1] == "help") {
 				var DGSEmbed = new Embed()
 					.setTitle(await translate("config.settings.dgs.embed.title", language, { prefix }))
@@ -782,7 +782,7 @@ class Settings extends Command {
 						await translate("config.settings.dgs.embed.view.text", language, { prefix })
 					);
 
-				return msg.channel.createMessage(DGSEmbed);
+				return msg.channel.createMessage({ embeds: [DGSEmbed] });
 			} else {
 				return await msg.error(
 					await translate("game.general.settings.error.notValid", language, { gameSetting: args[1], prefix })
@@ -820,7 +820,7 @@ class Settings extends Command {
 						);
 					}
 
-					await msg.channel.createMessage(langListEmbed);
+					await msg.channel.createMessage({ embeds: [langListEmbed] });
 				} else if (args[1] == "contribute") {
 					var clientUsername = client.user.username;
 					var contributeEmbed = new Embed()
@@ -842,7 +842,7 @@ class Settings extends Command {
 							})
 						);
 
-					await msg.channel.createMessage(contributeEmbed);
+					await msg.channel.createMessage({ embeds: [contributeEmbed] });
 				} else if (args[1] == null || args[1] == "help") {
 					const languages = require("../../lang/languages.json");
 					var languageData = languages.find((l) => l.code == language);
@@ -882,7 +882,7 @@ class Settings extends Command {
 							})
 						);
 
-					return msg.channel.createMessage(langEmbed);
+					return msg.channel.createMessage({ embeds: [langEmbed] });
 				} else {
 					return await msg.error(
 						await translate("config.settings.lang.error.notValid", language, {
