@@ -1,4 +1,3 @@
-const logger = require("../utils/logger");
 const mongoose = require("mongoose");
 const { mongoURI } = require("../utils/config");
 
@@ -8,8 +7,8 @@ module.exports = async () => {
 			useNewUrlParser: true,
 			useUnifiedTopology: true
 		})
-		.then(() => logger.log("info", "MongoDB connected!"))
-		.catch((err) => logger.log("info", `DB Connection Error: ${err.message}`));
+		.then(() => console.log("MongoDB connected!"))
+		.catch((err) => console.log(`DB Connection Error: ${err.message}`));
 
 	return connection;
 };

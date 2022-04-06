@@ -1,5 +1,4 @@
 const collections = require("../utils/collections");
-const logger = require("../utils/logger");
 const { ownerID } = require("../utils/config");
 const { hasBotPermissions, getCommandData, translate } = require("../utils/functions");
 const gameModel = require("../database/models/game");
@@ -260,7 +259,7 @@ module.exports = async (client, ipc, msg) => {
 			commandCooldowns[msg.author.id][commandName] = Date.now() + commandData.cooldown * 1000;
 		}
 
-		logger.log("info", `[${msg.guild.shard.id}] ${command.name.toUpperCase()} COMMAND`);
+		console.log(`[${msg.guild.shard.id}] ${command.name.toUpperCase()} COMMAND`);
 
 		data.guildData = guildData ? guildData : undefined;
 		data.args = args;
@@ -278,7 +277,7 @@ module.exports = async (client, ipc, msg) => {
 
 			if (err.constructor.name == "Message") return;
 			else if (err.constructor.name == "String") await msg.error(err);
-			else logger.error(err.toString());
+			else console.error(err.toString());
 		}
 
 		return;
