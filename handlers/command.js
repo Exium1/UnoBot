@@ -1,8 +1,7 @@
-const logger = require("../utils/logger.js");
 const collections = require("../utils/collections");
 
 module.exports = (client) => {
-	logger.log("info", "Loading commands...");
+	console.log("Loading commands...");
 
 	const { readdirSync } = require("fs");
 	const cmdCategories = readdirSync("./commands/");
@@ -13,7 +12,7 @@ module.exports = (client) => {
 		for (let file of commands) {
 			let commandFile = require(`../commands/${category}/${file}`);
 
-			logger.log("info", ` - ${file}`);
+			console.log(` - ${file}`);
 
 			var command = new commandFile(client);
 
@@ -21,7 +20,8 @@ module.exports = (client) => {
 			else continue;
 
 			// If there's an aliases key, read the aliases.
-			if (command.aliases && Array.isArray(command.aliases)) command.aliases.forEach((alias) => collections.aliases.set(alias, command.name));
+			if (command.aliases && Array.isArray(command.aliases))
+				command.aliases.forEach((alias) => collections.aliases.set(alias, command.name));
 		}
 	});
 

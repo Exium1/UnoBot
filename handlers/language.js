@@ -1,8 +1,7 @@
-const logger = require("../utils/logger");
 const { languages } = require("../utils/collections");
 
 module.exports = () => {
-	logger.log("info", "Loading languages...");
+	console.log("Loading languages...");
 
 	const languagesList = require("../lang/languages.json");
 
@@ -14,10 +13,10 @@ module.exports = () => {
 
 			if (langFile) {
 				languages.set(lang.code, langFile);
-				logger.log("info", ` - ${lang.code}.json`);
-			} else logger.log("warn", `No ${lang.code} file was found.`);
+				console.log(` - ${lang.code}.json`);
+			} else console.warn(`No ${lang.code} file was found.`);
 		} catch (e) {
-			logger.log("warn", ` - ${lang.code} could not be loaded.`);
+			console.warn(` - ${lang.code} could not be loaded.`);
 			console.log(e);
 		}
 	}

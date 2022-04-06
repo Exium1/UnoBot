@@ -1,8 +1,7 @@
-const logger = require("../utils/logger.js");
 const { readdirSync } = require("fs");
 
 module.exports = (client, ipc) => {
-	logger.log("info", "Loading events...");
+	console.log("Loading events...");
 
 	const events = readdirSync(`./events/`).filter((file) => file.endsWith(".js"));
 
@@ -10,7 +9,7 @@ module.exports = (client, ipc) => {
 		const eventName = file.split(".")[0];
 		const eventFile = require(`../events/${file}`);
 
-		logger.log("info", ` - ${file}`);
+		console.log(` - ${file}`);
 
 		client.on(eventName, eventFile.bind(null, client, ipc));
 	}

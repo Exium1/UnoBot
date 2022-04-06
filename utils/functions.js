@@ -6,7 +6,6 @@ const userModel = require("../database/models/user");
 const gameModel = require("../database/models/game");
 const collections = require("../utils/collections");
 const config = require("../utils/config");
-const logger = require("../utils/logger");
 
 module.exports = {
 	addCards: async function (count, gameData, position) {
@@ -965,7 +964,7 @@ module.exports = {
 
 	updateUserRanks: async function () {
 		return new Promise(async (resolve, reject) => {
-			logger.log("info", "Updating Global User Ranks...");
+			console.log("Updating Global User Ranks...");
 
 			var db = mongoose.connection;
 			var docCount = await db.collection("users").countDocuments();
@@ -998,7 +997,7 @@ module.exports = {
 				});
 			}
 
-			logger.log("info", "Updated Global User Ranks.");
+			console.log("Updated Global User Ranks.");
 
 			return resolve();
 		});

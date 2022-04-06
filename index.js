@@ -1,12 +1,14 @@
-const Sharder = require("eris-sharder").Master;
+const { isMaster } = require("cluster");
+const { Fleet } = require("eris-fleet");
+const path = require("path");
+const { inspect } = require("util");
 const { botToken, shardCount, topggToken, topggAutoPostStats } = require("./utils/config.js");
-const logger = require("./node_modules/eris-sharder/src/utils/logger.js");
 
-const sharder = new Sharder(botToken, "/bot.js", {
-	name: "UnoBot",
-	stats: true,
-	statsInterval: 1800000,
+const options = {
+	path: path.join(__dirname, "./bot.js"), // eslint-disable-line
+	token: botToken,
 	shards: shardCount,
+	statsInterval: 18e5, // 1800000 ms - 30 mins
 	clientOptions: {
 		messageLimit: 20,
 		defaultImageFormat: "png",
@@ -34,22 +36,36 @@ const sharder = new Sharder(botToken, "/bot.js", {
 		guildSubscriptions: false,
 		intents: ["guilds", "guildMessages", "guildMessageReactions", "directMessages", "directMessageReactions"]
 	}
-});
+};
 
-sharder.on("stats", async (stats) => {
-	var statsString = `Running ${stats.guilds} guilds, ${stats.users} users, and ${shardCount} shards.`;
+const Admiral = new Fleet(options);
 
-	logger.info("Cluster Manager", statsString);
+if (isMaster) {
+	Admiral.on("log", (m) => console.log(m));
+	Admiral.on("debug", (m) => console.debug(m));
+	Admiral.on("warn", (m) => console.warn(m));
+	Admiral.on("error", (m) => console.error(inspect(m)));
+	Admiral.on("stats", async (stats) => {
+		var statsString = `Running ${stats.guilds} guilds, ${stats.members} members, and ${shardCount} shards.`;
 
-	if (topggToken && topggAutoPostStats) {
-		const Topgg = require("@top-gg/sdk");
-		const topggApi = new Topgg.Api(topggToken);
+		console.log("Cluster Manager - ", statsString);
 
-		await topggApi.postStats({
-			serverCount: stats.guilds,
-			shardCount: shardCount
-		});
+		if (topggToken && topggAutoPostStats) {
+			const Topgg = require("@top-gg/sdk");
+			const topggApi = new Topgg.Api(topggToken);
 
-		logger.info("Cluster Manager", `Posted stats to Top.gg.`);
-	}
-});
+			await topggApi.postStats({
+				serverCount: stats.guilds,
+				shardCount: shardCount
+			});
+
+			console.log(`Posted stats to Top.gg.`);
+		}
+	});
+
+	var { updateUserRanks } = require("./utils/functions");
+
+	setInterval(async () => {
+		await updateUserRanks();
+	}, 43200000);
+}
