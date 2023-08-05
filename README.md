@@ -135,7 +135,15 @@ Now we will download the code off GitHub and set it up with your custom info.
 9. Install the dependencies.
     - In the command prompt set to your UnoBot folder, type and enter `npm i`.
     - This will download the dependencies required for the bot to run.
-    - After it has finished installing, you are free to close the command prompt.
+    - If you got any error during the installation **jump to (I)** otherwise **jump to (II)**.
+    - **(I)**
+        - If you got any error, that means that you don't have the libraries pre-installed to run `node-gyp`.
+        - Go to [Microsoft Visual Studio](https://visualstudio.microsoft.com/es/thank-you-downloading-visual-studio/?sku=Community) and install the LTS.
+        - Once you have the installation, find the **Desktop Development with C++** and check it. Then continue the installation with any Visual Studio Code version (Proffesional, Community), it doesn't matters.
+        - The installation (can weigh up 8GB) contains all the C++ libraries to run `node-gyp`.
+        - After the installation, please close the command prompt and do the same proccess from **step 7**.
+    - **(II)**
+        - After it has finished installing, you are free to close the command prompt.
 
 ### Run your bot
 
